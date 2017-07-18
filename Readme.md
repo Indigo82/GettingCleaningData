@@ -1,3 +1,5 @@
+## README
+
 The task was mainly build with the data.table package. Therefore no dplyr is needed. This included reading the data, merging, updating columns and aggregation.
 
 First I have loaded the feature labels. As I load them with "fread" there are stored as a data.table. I need them as a vector, what I do with the following snippet.
