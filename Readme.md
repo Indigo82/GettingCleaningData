@@ -1,10 +1,10 @@
-## Course Project: Getting and Cleaning Data
+# Course Project: Getting and Cleaning Data
 
-# Packages
+## Packages
 
 * The task was mainly build with the data.table package. Therefore no dplyr package is needed. This included reading the data, merging, updating columns and aggregation.
 
-# Method
+## Method
 
 * First I have loaded the feature labels. As I load them with "fread" there are stored as a data.table. I need them as a vector, what I do with the following snippet.
 
