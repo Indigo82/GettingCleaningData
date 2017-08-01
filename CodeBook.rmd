@@ -1,0 +1,20 @@
+---
+title: "Codebook"
+author: "Sven"
+date: "23 Juli 2017"
+output: html_document
+---
+
+```{r, include=FALSE}
+setwd("C:\\Users\\Sven\\Desktop\\GettingCleaningData\\")
+source("run_analysis.R")
+library(memisc)
+as.data.set(Data2)
+Data2 <- within(Data2, {
+        description(subject) <- "Person, who did the moves"
+})
+cd <- codebook(Data2)
+cd
+```
+
+

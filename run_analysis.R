@@ -1,9 +1,8 @@
-setwd("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\UCI HAR Dataset\\") #  set working directory
-
-
 #Download file from internet and unzip
+setwd("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\") #  set working directory
 URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 if(!file.exists("data.zip")){download.file(url = URL, destfile = "data.zip")}; unzip("data.zip") # if file already exists otherwise download and unzip
+setwd("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\UCI HAR Dataset\\") #  set working directory
 
 
 library(data.table)
@@ -35,9 +34,27 @@ Data <- Data[, (cols), with = FALSE]
 activitytable <- fread("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\UCI HAR Dataset\\activity_labels.txt", col.names = c("activity", "activityname"))
 Data[activitytable, activityname := activityname, on = .(activity)]
 
+# all columns lowercase and clean name without / and () and -
+colnames(Data) <- gsub("\\(|\\)", "", colnames(Data)) # remove paranthesis
+colnames(Data) <- gsub("-", "", colnames(Data)) # remove "-"
+colnames(Data) <- tolower(colnames(Data)) # all lowercase
+
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-Data2 <- Data[, lapply(.SD, mean), by = c("subject", "activity", "activityname")]
+Data[, activity := NULL]
+Data2 <- Data[, lapply(.SD, mean), by = c("subject", "activityname")]
 
 
 fwrite(Data2, file = "Data2.csv") #write data in a csv
+
+
+
+Data2set <- as.data.set(Data2)
+Data2set <- within(Data2set, {
+        description(fbodybodygyrojerkmagmeanfreq) <- "Test"
+        wording(fbodybodygyrojerkmagmeanfreq) <- "weiterer Test"
+})
+codebook(Data2set)
+
+
+
