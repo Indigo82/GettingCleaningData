@@ -45,7 +45,7 @@ Data[, activity := NULL]
 Data2 <- Data[, lapply(.SD, mean), by = c("subject", "activityname")]
 
 
-fwrite(Data2, file = "Data2.csv") #write data in a csv
+fwrite(Data2, file = "C:\Users\Sven\Desktop\GettingCleaningData\\TidyData.csv") #write data in a csv
 
 
 
