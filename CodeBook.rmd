@@ -1,20 +1,22 @@
 ---
-title: "Codebook"
+title: "Codebook_Project_GettingAndCleaningData"
 author: "Sven"
-date: "23 Juli 2017"
+date: "4 August 2017"
 output: html_document
 ---
 
-```{r, include=FALSE}
+
+```{r include = FALSE}
 setwd("C:\\Users\\Sven\\Desktop\\GettingCleaningData\\")
-source("run_analysis.R")
+library(data.table)
+ProcessedData <- fread("ProcessedData.csv")
 library(memisc)
-as.data.set(Data2)
-Data2 <- within(Data2, {
-        description(subject) <- "Person, who did the moves"
+ProcessedData <- as.data.set(ProcessedData)
+ProcessedData <- within(ProcessedData, {
+        description(subject) <- "Test person with wearables"
 })
-cd <- codebook(Data2)
-cd
 ```
 
-
+```{r Codebook}
+codebook(ProcessedData)
+```

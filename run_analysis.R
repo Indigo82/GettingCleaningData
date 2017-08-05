@@ -1,8 +1,8 @@
 #Download file from internet and unzip
-setwd("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\") #  set working directory
+setwd("C:\\Users\\Sven\\Desktop\\GettingCleaningData\\") #  set working directory
 URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-if(!file.exists("data.zip")){download.file(url = URL, destfile = "data.zip")}; unzip("data.zip") # if file already exists otherwise download and unzip
-setwd("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\UCI HAR Dataset\\") #  set working directory
+if(!file.exists("RawData.zip")){download.file(url = URL, destfile = "RawData.zip")}; unzip("RawData.zip"); rm(URL) # if file already exists otherwise download and unzip
+setwd("C:\\Users\\Sven\\Desktop\\GettingCleaningData\\UCI HAR Dataset\\") #  set working directory
 
 
 library(data.table)
@@ -28,33 +28,20 @@ Data  <- rbind(xtrain, xtest); rm(xtrain, xtest) # merge train and test
 
 #Extracts only the measurements on the mean and standard deviation for each measurement. 
 cols <- grep("subject|activity|mean|std", colnames(Data), value = T) # the mean and std columns and identifiers
-Data <- Data[, (cols), with = FALSE]
+Data <- Data[, (cols), with = FALSE]; rm(cols)
 
 #Uses descriptive activity names to name the activities in the data set
 activitytable <- fread("E:\\Weiterbildung\\06_Progamming\\R\\Coursera\\GettingData\\Week4\\Projekt\\UCI HAR Dataset\\activity_labels.txt", col.names = c("activity", "activityname"))
-Data[activitytable, activityname := activityname, on = .(activity)]
+Data[activitytable, activityname := activityname, on = .(activity)]; rm(activitytable)
 
 # all columns lowercase and clean name without / and () and -
 colnames(Data) <- gsub("\\(|\\)", "", colnames(Data)) # remove paranthesis
 colnames(Data) <- gsub("-", "", colnames(Data)) # remove "-"
-colnames(Data) <- tolower(colnames(Data)) # all lowercase
 
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 Data[, activity := NULL]
-Data2 <- Data[, lapply(.SD, mean), by = c("subject", "activityname")]
-
-
-fwrite(Data2, file = "C:\\Users\\Sven\\Desktop\\GettingCleaningData\\TidyData.csv") #write data in a csv
-
-
-
-Data2set <- as.data.set(Data2)
-Data2set <- within(Data2set, {
-        description(fbodybodygyrojerkmagmeanfreq) <- "Test"
-        wording(fbodybodygyrojerkmagmeanfreq) <- "weiterer Test"
-})
-codebook(Data2set)
-
-
-
+fwrite(Data, file = "C:\\Users\\Sven\\Desktop\\GettingCleaningData\\ProcessedData.csv")
+GroupedData <- Data[, lapply(.SD, mean), by = c("subject", "activityname")]
+fwrite(GroupedData, file = "C:\\Users\\Sven\\Desktop\\GettingCleaningData\\GroupedData.csv") #write data in a csv
+rm(Data, GroupedData)
