@@ -3,7 +3,7 @@
 ## Data Set Information
 It is the data file Smartlab of 2015 available from the [Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Smartphone-Based+Recognition+of+Human+Activities+and+Postural+Transitions).
 The data is called "Human Activity Recognition Using Smartphones Dataset". The total number of instances in the dataset is 10,929 and the number of attributes is 561.
-The dataset can directly be retrieved under [Data](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip).
+The dataset can directly be retrieved under [RawData](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip).
 
 ## Method
 
